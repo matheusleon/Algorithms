@@ -1,9 +1,8 @@
-vector<int> adj[MAXN];
 int tree[4*MAXN], lazy[4*MAXN];
 
 void build(int on = 1, int l = 0, int r = n - 1) {
   if (l == r) {
-    tree[on] = a[on];
+    tree[on] = a[l];
     return;
   }
   int mid = (l + r) / 2;
