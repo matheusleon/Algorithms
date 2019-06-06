@@ -96,29 +96,3 @@ vector<PT> hpi(double m) {
   }
   return res;
 }
-
-int main(){
-  int n;
-  cout << fixed << setprecision(3);
-  while (cin >> n && n) {
-    poly.clear();
-    for(int i = 0; i < n; i++){
-      double x, y;
-      cin >> x >> y;
-      poly.push_back(PT(x, y));
-    }
-    reverse(poly.begin(), poly.end());
-    double l = 0.0, r = 1e10;
-    for (int i = 0; i < 200; i++) {
-      double mid = (l + r) / 2.0;
-      vector<PT> ans = hpi(mid);
-      if (hpi(mid).size() > 2) {
-        l = mid;
-      } else {
-        r = mid;
-      }
-    }
-    cout << l << '\n';
-  }
-  return 0;
-}
