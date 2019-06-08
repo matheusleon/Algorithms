@@ -9,7 +9,7 @@ int parent[MAXN], sz[MAXN];
 void dfsSubtree(int u, int p) {
   sz[u] = 1;
   for (auto v : adj[u]) {
-    if (v != p) {
+    if (v != p && !removed[v]) {
       dfsSubtree(v, u);
       sz[u] += sz[v];
     }
@@ -18,23 +18,24 @@ void dfsSubtree(int u, int p) {
 
 int getCentroid(int u, int p, int size) {
   for (auto v : adj[u]) {
-    if (v != p && sz[v] > size / 2) return getCentroid(v, u, size);
+    if (v != p && !removed[v] && sz[v] * 2 >= size) return getCentroid(v, u, size);
   }
   return u;
 }
 
-void decompose(int u, int pctr) {
+void decompose(int u, int p) {
   dfsSubtree(u, -1);
   int ctr = getCentroid(u, -1, sz[u]); 
-  if (pctr == -1) {
-    pctr = ctr;
+  if (p == -1) {
+    p = ctr;
   }
-  parent[ctr] = pctr;
+  parent[ctr] = p;
+  removed[ctr] = 1;
   for (auto v : adj[ctr]) {
-    adj[v].erase(ctr);
-    decompose(v, ctr);
+    if (v != p && !removed[v]) {
+      decompose(v, ctr);
+    }
   }
-  adj[ctr].clear();
 }
 
 int main() {
