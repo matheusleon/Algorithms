@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-
-using namespace std;
 const int MAXN = 1e5 + 7;
 
 set<int> adj[MAXN];
@@ -36,9 +33,4 @@ void decompose(int u, int p) {
       decompose(v, ctr);
     }
   }
-}
-
-int main() {
-  
-  return 0;
 }
