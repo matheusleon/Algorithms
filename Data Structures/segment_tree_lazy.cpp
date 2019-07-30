@@ -1,6 +1,7 @@
 int tree[4*MAXN], lazy[4*MAXN];
 
 void build(int on = 1, int l = 0, int r = n - 1) {
+  lazy[on] = 0;
   if (l == r) {
     tree[on] = a[l];
     return;
