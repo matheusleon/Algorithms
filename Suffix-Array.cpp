@@ -67,3 +67,26 @@ int distinctSubstrings(string s) {
 	}
 	return ans;
 }
+
+void kthLexicographicalSubstring() {
+	string s;
+	cin >> s;
+	int n = s.size();
+	vector<int> sa = buildSA(s);
+	vector<int> pref = buildLCP(s, sa);
+	vector<int> prefAcum(n);	
+	prefAcum[0] = n - sa[0];
+	for (int i = 1; i < n; i++) {
+		prefAcum[i] = prefAcum[i - 1] + ((n - sa[i]) - pref[i - 1]);
+	}
+	int m;
+	cin >> m;
+	for (int i = 0; i < m; i++) {
+		int k;
+		cin >> k;
+		int pos = lower_bound(prefAcum.begin(), prefAcum.end(), k) - prefAcum.begin();
+		string ans;
+		ans = s.substr(sa[pos], pref[pos - 1] + (k - prefAcum[pos - 1]));
+		cout << ans << '\n';
+	}
+}
