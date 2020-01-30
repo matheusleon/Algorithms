@@ -20,6 +20,15 @@ int getCentroid(int u, int p, int size) {
   return u;
 }
 
+void setDis(int v, int par, int nv, ll d) {
+	dis[v][nv] = d;
+	for(auto x : adj[v]) {
+		int u = x.first, w = x.second;
+		if (u == par || removed[u]) continue;
+		setDis(u, v, nv, d + w);
+	}
+}
+
 void decompose(int u, int p) {
   dfsSubtree(u, -1);
   int ctr = getCentroid(u, -1, sz[u]); 
