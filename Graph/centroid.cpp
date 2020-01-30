@@ -29,17 +29,19 @@ void setDis(int v, int par, int nv, ll d) {
 	}
 }
 
-void decompose(int u, int p) {
-  dfsSubtree(u, -1);
-  int ctr = getCentroid(u, -1, sz[u]); 
-  if (p == -1) {
-    p = ctr;
-  }
-  parent[ctr] = p;
-  removed[ctr] = 1;
-  for (auto v : adj[ctr]) {
-    if (v != p && !removed[v]) {
-      decompose(v, ctr);
-    }
-  }
+void decompose(int u, int p, int nv) {
+	dfsSubtree(u, -1);
+	int ctr = getCentroid(u, -1, -1, sz[u]); 
+	if (p == -1) {
+		p = ctr;
+	}
+	parent[ctr] = p;
+	removed[ctr] = 1;
+	setDis(ctr, p, nv, 0);
+	for (auto x : adj[ctr]) {
+		int v = x.first;
+		if (v != p && !removed[v]) {
+			decompose(v, ctr, nv + 1);
+		}
+	}
 }
